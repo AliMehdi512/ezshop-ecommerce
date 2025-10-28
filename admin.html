@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EZShop Admin Panel - E-commerce Management System</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="EZShop Admin Panel - Manage products, orders, inventory, and SEO settings">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    
+    <!-- Admin Panel Styles -->
+    <style>
+        .admin-panel {
+            min-height: 100vh;
+            background: #f8f9fa;
+        }
+        
+        .admin-sidebar {
+            background: #343a40;
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        .admin-sidebar .nav-link {
+            color: #adb5bd;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #495057;
+            transition: all 0.3s;
+        }
+        
+        .admin-sidebar .nav-link:hover,
+        .admin-sidebar .nav-link.active {
+            color: #fff;
+            background: #007bff;
+        }
+        
+        .admin-sidebar .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+        }
+        
+        .admin-header {
+            background: #fff;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .admin-content {
+            padding: 2rem;
+        }
+        
+        .admin-card {
+            background: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .admin-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #dee2e6;
+            background: #f8f9fa;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        
+        .admin-card-body {
+            padding: 1.5rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #007bff;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-panel">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2">
+                <div class="admin-sidebar">
+                    <div class="p-3 text-center border-bottom">
+                        <h4 class="text-white mb-0">EZShop Admin</h4>
+                        <small class="text-muted">Management Panel</small>
+                    </div>
+                    <nav class="nav flex-column">
+                        <a class="nav-link active" href="#dashboard" data-section="dashboard">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                        <a class="nav-link" href="#products" data-section="products">
+                            <i class="fas fa-box"></i> Products
+                        </a>
+                        <a class="nav-link" href="#inventory" data-section="inventory">
+                            <i class="fas fa-warehouse"></i> Inventory
+                        </a>
+                        <a class="nav-link" href="#orders" data-section="orders">
+                            <i class="fas fa-shopping-cart"></i> Orders
+                        </a>
+                        <a class="nav-link" href="#customers" data-section="customers">
+                            <i class="fas fa-users"></i> Customers
+                        </a>
+                        <a class="nav-link" href="#analytics" data-section="analytics">
+                            <i class="fas fa-chart-bar"></i> Analytics
+                        </a>
+                        <a class="nav-link" href="#seo" data-section="seo">
+                            <i class="fas fa-search"></i> SEO Settings
+                        </a>
+                        <a class="nav-link" href="#search" data-section="search">
+                            <i class="fas fa-search-plus"></i> Search Settings
+                        </a>
+                        <a class="nav-link" href="#settings" data-section="settings">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10">
+                <!-- Header -->
+                <div class="admin-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 id="page-title">Dashboard</h2>
+                        <div class="d-flex align-items-center">
+                            <span class="text-muted me-3">Welcome, Admin</span>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Area -->
+                <div class="admin-content">
+                    <!-- Dashboard Section -->
+                    <div id="dashboard-section" class="content-section">
+                        <div class="dashboard-grid">
+                            <div class="stat-card">
+                                <h3 id="total-products">0</h3>
+                                <p>Total Products</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="total-orders">0</h3>
+                                <p>Total Orders</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="total-revenue">$0</h3>
+                                <p>Total Revenue</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3 id="total-customers">0</h3>
+                                <p>Total Customers</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="admin-card">
+                                    <div class="admin-card-header">
+                                        <h5>Recent Orders</h5>
+                                    </div>
+                                    <div class="admin-card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Order #</th>
+                                                        <th>Customer</th>
+                                                        <th>Total</th>
+                                                        <th>Status</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="recent-orders">
+                                                    <!-- Recent orders will be populated here -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div class="admin-card">
+                                    <div class="admin-card-header">
+                                        <h5>Low Stock Alerts</h5>
+                                    </div>
+                                    <div class="admin-card-body">
+                                        <div id="low-stock-alerts">
+                                            <!-- Low stock alerts will be populated here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Section -->
+                    <div id="products-section" class="content-section" style="display: none;">
+                        <div class="admin-card">
+                            <div class="admin-card-header">
+                                <h5>Product Management</h5>
+                                <button class="btn btn-primary btn-sm" onclick="showProductForm()">
+                                    <i class="fas fa-plus"></i> Add Product
+                                </button>
+                            </div>
+                            <div class="admin-card-body">
+                                <div id="products-content">
+                                    <!-- Products will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Inventory Section -->
+                    <div id="inventory-section" class="content-section" style="display: none;">
+                        <div id="inventory-content">
+                            <!-- Inventory management will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Orders Section -->
+                    <div id="orders-section" class="content-section" style="display: none;">
+                        <div id="orders-content">
+                            <!-- Order management will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Customers Section -->
+                    <div id="customers-section" class="content-section" style="display: none;">
+                        <div class="admin-card">
+                            <div class="admin-card-header">
+                                <h5>Customer Management</h5>
+                            </div>
+                            <div class="admin-card-body">
+                                <div id="customers-content">
+                                    <!-- Customers will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Analytics Section -->
+                    <div id="analytics-section" class="content-section" style="display: none;">
+                        <div class="admin-card">
+                            <div class="admin-card-header">
+                                <h5>Analytics Dashboard</h5>
+                            </div>
+                            <div class="admin-card-body">
+                                <div id="analytics-content">
+                                    <!-- Analytics will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SEO Section -->
+                    <div id="seo-section" class="content-section" style="display: none;">
+                        <div class="admin-card">
+                            <div class="admin-card-header">
+                                <h5>SEO Settings</h5>
+                            </div>
+                            <div class="admin-card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Site Settings</h6>
+                                        <div class="mb-3">
+                                            <label class="form-label">Site Title</label>
+                                            <input type="text" class="form-control" id="site-title" value="Electro - Premium Electronics Store">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Meta Description</label>
+                                            <textarea class="form-control" id="meta-description" rows="3">Discover the latest electronics and tech gadgets at Electro. Shop premium smartphones, laptops, headphones, gaming accessories, and smart home devices.</textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Keywords</label>
+                                            <input type="text" class="form-control" id="keywords" value="electronics store, tech gadgets, smartphones, laptops, headphones">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>SEO Features</h6>
+                                        <div class="feature-toggle">
+                                            <span>Structured Data</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>Schema Markup</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>Open Graph</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>Twitter Cards</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>Breadcrumbs</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" onclick="saveSEOSettings()">Save SEO Settings</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Section -->
+                    <div id="search-section" class="content-section" style="display: none;">
+                        <div class="admin-card">
+                            <div class="admin-card-header">
+                                <h5>Search Settings</h5>
+                            </div>
+                            <div class="admin-card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Search Configuration</h6>
+                                        <div class="mb-3">
+                                            <label class="form-label">Search Results Per Page</label>
+                                            <select class="form-select" id="results-per-page">
+                                                <option value="12">12</option>
+                                                <option value="24">24</option>
+                                                <option value="48">48</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Default Sort</label>
+                                            <select class="form-select" id="default-sort">
+                                                <option value="relevance">Relevance</option>
+                                                <option value="price-low">Price: Low to High</option>
+                                                <option value="price-high">Price: High to Low</option>
+                                                <option value="rating">Highest Rated</option>
+                                                <option value="newest">Newest First</option>
+                                            </select>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>Enable Filters</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>Enable Autocomplete</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Search Analytics</h6>
+                                        <div class="mb-3">
+                                            <label class="form-label">Popular Searches</label>
+                                            <div id="popular-searches">
+                                                <span class="badge bg-primary me-1 mb-1">headphones</span>
+                                                <span class="badge bg-primary me-1 mb-1">smartphone</span>
+                                                <span class="badge bg-primary me-1 mb-1">laptop</span>
+                                                <span class="badge bg-primary me-1 mb-1">gaming</span>
+                                                <span class="badge bg-primary me-1 mb-1">camera</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Search Performance</label>
+                                            <div class="progress mb-2">
+                                                <div class="progress-bar" style="width: 85%">85% Success Rate</div>
+                                            </div>
+                                            <small class="text-muted">Average response time: 120ms</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" onclick="saveSearchSettings()">Save Search Settings</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Section -->
+                    <div id="settings-section" class="content-section" style="display: none;">
+                        <div class="admin-card">
+                            <div class="admin-card-header">
+                                <h5>System Settings</h5>
+                            </div>
+                            <div class="admin-card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>General Settings</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Store Name</label>
+                            <input type="text" class="form-control" value="EZShop Electronics Store">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Store Email</label>
+                            <input type="email" class="form-control" value="ali.mehdi.dev579@gmail.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Store Phone</label>
+                            <input type="tel" class="form-control" value="+92-326-4747914">
+                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Feature Toggles</h6>
+                                        <div class="feature-toggle">
+                                            <span>Search Functionality</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>Inventory Management</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>Order Management</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="feature-toggle">
+                                            <span>SEO Optimization</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/orders.js"></script>
+    <script src="js/seo-optimization.js"></script>
+    
+    <script>
+        // Admin Panel JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAdminPanel();
+        });
+
+        function initializeAdminPanel() {
+            // Initialize navigation
+            initializeNavigation();
+            
+            // Load dashboard data
+            loadDashboardData();
+            
+            // Initialize sections
+            initializeSections();
+        }
+
+        function initializeNavigation() {
+            const navLinks = document.querySelectorAll('.admin-sidebar .nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const section = this.dataset.section;
+                    showSection(section);
+                });
+            });
+        }
+
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.style.display = 'none');
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            // Update page title
+            const pageTitle = document.getElementById('page-title');
+            pageTitle.textContent = sectionName.charAt(0).toUpperCase() + sectionName.slice(1);
+            
+            // Load section-specific content
+            loadSectionContent(sectionName);
+        }
+
+        function loadSectionContent(sectionName) {
+            switch(sectionName) {
+                case 'inventory':
+                    if (window.inventoryManager) {
+                        document.getElementById('inventory-content').innerHTML = '';
+                        window.inventoryManager.createInventoryInterface();
+                    }
+                    break;
+                case 'orders':
+                    if (window.orderManager) {
+                        document.getElementById('orders-content').innerHTML = '';
+                        window.orderManager.createOrderInterface();
+                    }
+                    break;
+                case 'customers':
+                    loadCustomers();
+                    break;
+                case 'analytics':
+                    loadAnalytics();
+                    break;
+            }
+        }
+
+        function loadDashboardData() {
+            // Mock data - in real implementation, this would come from APIs
+            document.getElementById('total-products').textContent = '18';
+            document.getElementById('total-orders').textContent = '5';
+            document.getElementById('total-revenue').textContent = '$2,890.30';
+            document.getElementById('total-customers').textContent = '5';
+            
+            // Load recent orders
+            loadRecentOrders();
+            
+            // Load low stock alerts
+            loadLowStockAlerts();
+        }
+
+        function loadRecentOrders() {
+            const recentOrders = [
+                { order: 'ORD-2024-001', customer: 'John Smith', total: '$333.98', status: 'Delivered', date: '2024-01-15' },
+                { order: 'ORD-2024-002', customer: 'Sarah Johnson', total: '$485.97', status: 'Shipped', date: '2024-01-16' },
+                { order: 'ORD-2024-003', customer: 'Mike Davis', total: '$1,423.98', status: 'Processing', date: '2024-01-17' }
+            ];
+            
+            const tbody = document.getElementById('recent-orders');
+            tbody.innerHTML = recentOrders.map(order => `
+                <tr>
+                    <td>${order.order}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.total}</td>
+                    <td><span class="badge bg-${getStatusColor(order.status)}">${order.status}</span></td>
+                    <td>${order.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        function loadLowStockAlerts() {
+            const alerts = [
+                { product: '4K Ultra HD Camera', stock: 12, min: 15 },
+                { product: 'Tablet Pro 12.9 inch', stock: 15, min: 20 },
+                { product: 'Monitor 27 inch 4K', stock: 19, min: 25 }
+            ];
+            
+            const container = document.getElementById('low-stock-alerts');
+            container.innerHTML = alerts.map(alert => `
+                <div class="alert alert-warning d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>${alert.product}</strong><br>
+                        <small>Stock: ${alert.stock} | Min: ${alert.min}</small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-primary">Reorder</button>
+                </div>
+            `).join('');
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'Delivered': 'success',
+                'Shipped': 'primary',
+                'Processing': 'warning',
+                'Pending': 'secondary',
+                'Cancelled': 'danger'
+            };
+            return colors[status] || 'secondary';
+        }
+
+        function loadCustomers() {
+            const customers = [
+                { name: 'John Smith', email: 'john.smith@email.com', orders: 3, spent: '$899.97' },
+                { name: 'Sarah Johnson', email: 'sarah.j@email.com', orders: 5, spent: '$1,245.50' },
+                { name: 'Mike Davis', email: 'mike.davis@email.com', orders: 1, spent: '$1,423.98' }
+            ];
+            
+            const container = document.getElementById('customers-content');
+            container.innerHTML = `
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Orders</th>
+                                <th>Total Spent</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${customers.map(customer => `
+                                <tr>
+                                    <td>${customer.name}</td>
+                                    <td>${customer.email}</td>
+                                    <td>${customer.orders}</td>
+                                    <td>${customer.spent}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View</button>
+                                        <button class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function loadAnalytics() {
+            const container = document.getElementById('analytics-content');
+            container.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Traffic Sources</h6>
+                        <div class="progress mb-2">
+                            <div class="progress-bar" style="width: 45%">Organic Search (45%)</div>
+                        </div>
+                        <div class="progress mb-2">
+                            <div class="progress-bar bg-success" style="width: 30%">Direct (30%)</div>
+                        </div>
+                        <div class="progress mb-2">
+                            <div class="progress-bar bg-info" style="width: 15%">Social (15%)</div>
+                        </div>
+                        <div class="progress mb-2">
+                            <div class="progress-bar bg-warning" style="width: 10%">Referral (10%)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Performance Metrics</h6>
+                        <div class="mb-3">
+                            <strong>Page Load Time:</strong> 1.2s
+                        </div>
+                        <div class="mb-3">
+                            <strong>Bounce Rate:</strong> 35%
+                        </div>
+                        <div class="mb-3">
+                            <strong>Conversion Rate:</strong> 2.8%
+                        </div>
+                        <div class="mb-3">
+                            <strong>Average Order Value:</strong> $156.50
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function initializeSections() {
+            // Initialize any section-specific functionality
+        }
+
+        function saveSEOSettings() {
+            alert('SEO settings saved successfully!');
+        }
+
+        function saveSearchSettings() {
+            alert('Search settings saved successfully!');
+        }
+
+        function saveSettings() {
+            alert('Settings saved successfully!');
+        }
+
+        function showProductForm() {
+            alert('Product form would open here');
+        }
+    </script>
+</body>
+</html>
