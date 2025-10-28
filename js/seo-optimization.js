@@ -334,20 +334,16 @@ class SEOOptimizer {
     }
 
     addRelatedProducts() {
-        // This would integrate with the product system
-        const relatedProducts = this.getRelatedProducts();
-        if (relatedProducts.length > 0) {
-            const relatedHTML = this.createRelatedProductsHTML(relatedProducts);
-            this.insertRelatedProducts(relatedHTML);
-        }
+        // Related products disabled - using existing HTML sections instead
+        return;
     }
 
     getRelatedProducts() {
         // Mock data - in real implementation, this would come from the product system
         return [
-            { name: 'Gaming Mouse RGB', url: '/single.html?id=8', image: '/img/product-8.png' },
-            { name: 'Gaming Headset', url: '/single.html?id=16', image: '/img/product-16.png' },
-            { name: 'Mechanical Keyboard', url: '/single.html?id=4', image: '/img/product-4.png' }
+            { name: 'Gaming Mouse RGB', url: 'single.html?id=8', image: 'img/product-8.png' },
+            { name: 'Gaming Headset', url: 'single.html?id=16', image: 'img/product-16.png' },
+            { name: 'Mechanical Keyboard', url: 'single.html?id=4', image: 'img/product-4.png' }
         ];
     }
 
