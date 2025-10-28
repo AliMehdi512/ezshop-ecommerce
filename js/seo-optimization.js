@@ -252,16 +252,13 @@ class SEOOptimizer {
     }
 
     addBreadcrumbs() {
-        const breadcrumbs = this.generateBreadcrumbs();
-        if (breadcrumbs.length > 1) {
-            const breadcrumbHTML = this.createBreadcrumbHTML(breadcrumbs);
-            this.insertBreadcrumbs(breadcrumbHTML);
-        }
+        // Breadcrumbs disabled - removed as requested
+        return;
     }
 
     generateBreadcrumbs() {
         const path = window.location.pathname;
-        const segments = path.split('/').filter(segment => segment);
+        const segments = path.split('/').filter(segment => segment && segment !== 'ezshop-ecommerce');
         
         const breadcrumbs = [
             { name: 'Home', url: '/' }
